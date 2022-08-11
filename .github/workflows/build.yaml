@@ -23,6 +23,8 @@ jobs:
           password: ${{ github.token }}
 
       # TODO: add cosign-installer etc.
+      - name: install cosign
+        uses: sigstore/cosign-installer@main
 
       - name: Prepare Dockerfile
         run: |
@@ -38,3 +40,11 @@ jobs:
             ghcr.io/oldbigbuddha/seccomp2022-b7-image-oji:latest
           platforms: linux/amd64
           push: true
+      - name: Sign the container image
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: cosign sign --force ghcr.io/oldbigbuddha/seccomp2022-b7-image-oji@${{ steps.push-step.outputs.digest }}
+      - name: Verify the container image
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: cosign verify ghcr.io/oldbigbuddha/seccomp2022-b7-image-oji@${{ steps.push-step.outputs.digest }}
