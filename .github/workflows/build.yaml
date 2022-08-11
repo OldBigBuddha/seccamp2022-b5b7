@@ -35,6 +35,6 @@ jobs:
           file: ./Dockerfile
           # Suppose that your repository is located at https://github.com/<X>/<Y>, this value should be equal to ghcr.io/<X>/<random value>:latest
           tags: |
-            ghcr.io/OldBigBuddha/seccomp2022-b7-image-oji:latest
+            ghcr.io/oldbigbuddha/seccomp2022-b7-image-oji:latest
           platforms: linux/amd64
           push: true
